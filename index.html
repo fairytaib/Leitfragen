@@ -1,0 +1,210 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Tafsir-Gesprächsbogen</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Instrument+Sans:wght@400;500;600&family=Amiri:wght@400&display=swap">
+<style>
+/* Layout: ruhige Lesespalte wie ein Studienheft; links ein schmales Archiv der Sitzungen, rechts der Bogen */
+:root{
+  --bg:#f3f2ee; --paper:#fbfaf7; --ink:#1d2a2b; --muted:#5d6b6a; --line:#d9ddd8;
+  --accent:#1f5f5b; --accent-soft:#e1ece9; --brass:#9a7a3c; --danger:#a3402f;
+  --display:"Newsreader",Georgia,"Times New Roman",serif;
+  --body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --arabic:"Amiri","Traditional Arabic",serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#121817; --paper:#1a2120; --ink:#e6ebe8; --muted:#9aa8a5; --line:#2e3836;
+  --accent:#7cc3b9; --accent-soft:#1f302d; --brass:#d1b177; --danger:#e48b78; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121817; --paper:#1a2120; --ink:#e6ebe8; --muted:#9aa8a5; --line:#2e3836;
+  --accent:#7cc3b9; --accent-soft:#1f302d; --brass:#d1b177; --danger:#e48b78; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 64px}
+.wrap{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:240px minmax(0,1fr);gap:32px;align-items:start}
+@media (max-width:820px){.wrap{grid-template-columns:minmax(0,1fr)}}
+
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* Archiv */
+aside{position:sticky;top:calc(env(safe-area-inset-top,0px) + 16px);display:flex;flex-direction:column;gap:12px}
+@media (max-width:820px){aside{position:static}}
+.label{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.btn{border:1px solid var(--line);background:var(--paper);border-radius:8px;padding:8px 12px;font-size:14px;font-weight:500}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--paper)}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent}
+.btn.danger{color:var(--danger)}
+.sessions{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px;max-height:60vh;overflow:auto}
+@media (max-width:820px){.sessions{max-height:180px}}
+.sessions button{width:100%;text-align:left;border:0;background:transparent;border-radius:6px;padding:8px 10px;display:flex;flex-direction:column;gap:1px}
+.sessions button:hover{background:var(--accent-soft)}
+.sessions button[aria-current="true"]{background:var(--accent-soft);box-shadow:inset 2px 0 0 var(--accent)}
+.s-title{font-weight:500;font-size:14px;overflow-wrap:anywhere}
+.s-meta{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+
+/* Bogen */
+main{min-width:0;display:flex;flex-direction:column;gap:28px}
+header.sheet{display:flex;flex-direction:column;gap:18px;padding-bottom:22px;border-bottom:1px solid var(--line)}
+.top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.arabic{font-family:var(--arabic);font-size:22px;color:var(--brass);line-height:1}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(28px,4.4vw,40px);line-height:1.1;margin:0;text-wrap:balance}
+.lede{margin:0;color:var(--muted);max-width:60ch}
+.meta{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px 14px}
+.meta .wide{grid-column:span 2}
+@media (max-width:620px){.meta{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.field{display:flex;flex-direction:column;gap:4px;min-width:0}
+.field input{border:0;border-bottom:1px solid var(--line);background:transparent;padding:6px 0;font-size:15px;width:100%;min-width:0;border-radius:0}
+.field input:focus{outline:none;border-bottom-color:var(--accent)}
+.field input::placeholder,textarea::placeholder{color:var(--muted);opacity:.7}
+
+.progress{display:flex;align-items:center;gap:12px;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.bar{flex:1;height:3px;background:var(--line);border-radius:3px;overflow:hidden;max-width:220px}
+.bar i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+
+ol.qs{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:30px}
+.q{display:grid;grid-template-columns:44px minmax(0,1fr);gap:4px 14px}
+.num{font-family:var(--display);font-size:30px;line-height:1;color:var(--brass);font-variant-numeric:lining-nums}
+.q-body{display:flex;flex-direction:column;gap:8px;min-width:0}
+.kicker{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.q h2{font-family:var(--display);font-weight:400;font-size:21px;line-height:1.3;margin:0;text-wrap:balance;max-width:58ch}
+details{font-size:14px;color:var(--muted)}
+details summary{cursor:pointer;width:max-content;max-width:100%;color:var(--muted)}
+details summary:hover{color:var(--accent)}
+details ul{margin:6px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:3px;max-width:62ch}
+textarea{width:100%;min-height:96px;resize:vertical;border:1px solid var(--line);border-radius:8px;background:var(--paper);padding:12px 14px;line-height:1.55;font-size:15px}
+textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.q.done .num{color:var(--accent)}
+
+.free{display:flex;flex-direction:column;gap:8px;padding-top:22px;border-top:1px solid var(--line)}
+.free h2{font-family:var(--display);font-weight:600;font-size:20px;margin:0}
+
+.actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.confirm{display:flex;gap:8px;align-items:center;font-size:14px;flex-wrap:wrap}
+.toast{font-size:13px;color:var(--accent)}
+.export{width:100%;min-height:200px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13px}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+</style>
+
+<div class="wrap">
+  <aside>
+    <span class="label">Sitzungen</span>
+    <button class="btn primary" id="newBtn" type="button">+ Neue Sitzung</button>
+    <ul class="sessions" id="list"></ul>
+  </aside>
+
+  <main>
+    <header class="sheet">
+      <div class="top">
+        <span class="label">Concise Commentary · Gesprächsbogen</span>
+        <span class="arabic" lang="ar" dir="rtl">تَدَبُّر</span>
+      </div>
+      <h1 id="heading">Neue Sitzung</h1>
+      <p class="lede">Erst gemeinsam schauen, dann reden. Die Fragen sind ein Leitfaden, keine Pflicht. Springt ruhig dorthin, wo das Gespräch lebendig wird.</p>
+      <div class="meta">
+        <label class="field"><span class="label">Sura</span><input id="f-sura" placeholder="z. B. Al-Kahf"></label>
+        <label class="field"><span class="label">Verse</span><input id="f-ayat" placeholder="z. B. 18:60–82"></label>
+        <label class="field"><span class="label">Datum</span><input id="f-date" type="date"></label>
+        <label class="field"><span class="label">Episode</span><input id="f-ep" placeholder="Nr. oder Titel"></label>
+        <label class="field wide"><span class="label">Dabei</span><input id="f-who" placeholder="Namen"></label>
+      </div>
+      <div class="progress"><span id="progText">0 von 6 Fragen besprochen</span><span class="bar"><i id="progBar"></i></span></div>
+    </header>
+
+    <ol class="qs" id="qs"></ol>
+
+    <section class="free">
+      <h2>Freie Notizen</h2>
+      <textarea id="f-free" placeholder="Zitate, Querverweise, Verse zum Nachschlagen …"></textarea>
+    </section>
+
+    <div class="actions">
+      <button class="btn" id="copyBtn" type="button">Als Text kopieren</button>
+      <span id="delWrap"><button class="btn ghost danger" id="delBtn" type="button">Sitzung löschen</button></span>
+      <span class="toast" id="toast" aria-live="polite"></span>
+    </div>
+    <textarea class="export" id="exportBox" hidden readonly aria-label="Export"></textarea>
+  </main>
+</div>
+
+<script>
+const QUESTIONS=[
+  {k:"Der Haken",q:"Welcher Satz, welches Bild oder welches Wort aus dem Vortrag ist bei dir hängen geblieben? Warum gerade das?",
+   d:["Erzählt euch gegenseitig, ohne vorher abzustimmen. Habt ihr dasselbe gewählt?","Was sagt eure Wahl darüber, wo ihr gerade im Leben steht?"]},
+  {k:"Das Wort",q:"Welches arabische Wort oder welche Wendung wurde aufgeschlüsselt, und was zeigt sie, das eine Übersetzung verschluckt?",
+   d:["Versucht, die Bedeutung in einem eigenen deutschen Satz einzufangen.","Warum könnte Allah genau dieses Wort gewählt haben und nicht ein naheliegendes Synonym?"]},
+  {k:"Vorher, nachher",q:"Wie hättest du diese Verse vor dem Vortrag verstanden? Was liest du jetzt anders?",
+   d:["Gab es eine Stelle, an der du dachtest: Das habe ich immer falsch gelesen?","Welcher Zusammenhang (Struktur, Kontext, Anlass) hat das Bild verändert?"]},
+  {k:"Die Brücke",q:"Wo begegnet dir das Thema dieser Verse sonst: an anderer Stelle im Quran, in einer Geschichte, in deinem Alltag?",
+   d:["Nennt einen konkreten Moment der letzten Wochen, auf den die Passage passt.","Spricht der Text eher zu dir als Einzelnem oder zu euch als Gemeinschaft?"]},
+  {k:"Das Unbequeme",q:"Was blieb offen, hat dich irritiert oder herausgefordert? Welche Frage würdest du dem Sprecher gern stellen?",
+   d:["Haltet die offene Frage fest, statt sie sofort zu beantworten.","Wer von euch recherchiert bis zum nächsten Treffen eine Antwort?"]},
+  {k:"Das Mitnehmen",q:"Was willst du diese Woche ganz konkret anders machen, und wer von euch erinnert wen daran?",
+   d:["So klein und überprüfbar wie möglich formulieren.","Beim nächsten Treffen zuerst hierauf zurückschauen."]}
+];
+const KEY="tafsir-gespraech-v1";
+const FIELDS=["sura","ayat","date","ep","who","free"];
+const $=id=>document.getElementById(id);
+let state={sessions:[],current:null};
+
+function today(){const d=new Date();return d.toISOString().slice(0,10)}
+function blank(){return{id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),sura:"",ayat:"",date:today(),ep:"",who:"",free:"",answers:QUESTIONS.map(()=> "")}}
+function load(){try{const s=JSON.parse(localStorage.getItem(KEY)||"null");if(s&&Array.isArray(s.sessions)&&s.sessions.length)state=s}catch(e){}
+  if(!state.sessions.length){const ex=blank();ex.sura="Al-Kahf";ex.ayat="18:60–82";ex.ep="Musa und Khidr";ex.answers[0]="Beispiel: Musa sagt, er gehe weiter, bis er das Ziel erreicht, und wenn es Jahre dauert. Diese Entschlossenheit beim Lernen.";state.sessions=[ex];state.current=ex.id}
+  if(!state.sessions.find(s=>s.id===state.current))state.current=state.sessions[0].id}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
+function cur(){return state.sessions.find(s=>s.id===state.current)}
+function titleOf(s){const t=[s.sura,s.ayat].filter(Boolean).join(" · ");return t||"Ohne Titel"}
+function fmtDate(d){if(!d)return"";const[y,m,dd]=d.split("-");return`${dd}.${m}.${y}`}
+
+function buildQuestions(){
+  $("qs").innerHTML=QUESTIONS.map((q,i)=>`<li class="q" id="q${i}">
+    <span class="num">${i+1}</span>
+    <div class="q-body">
+      <span class="kicker">${q.k}</span>
+      <h2 id="qh${i}">${q.q}</h2>
+      <details><summary>Weiterfragen</summary><ul>${q.d.map(x=>`<li>${x}</li>`).join("")}</ul></details>
+      <textarea id="a${i}" aria-labelledby="qh${i}" placeholder="Eure Gedanken …"></textarea>
+    </div></li>`).join("");
+  QUESTIONS.forEach((_,i)=>$("a"+i).addEventListener("input",e=>{cur().answers[i]=e.target.value;save();progress();renderList()}));
+}
+function renderList(){
+  const sorted=[...state.sessions].sort((a,b)=>(b.date||"").localeCompare(a.date||""));
+  $("list").innerHTML=sorted.map(s=>{const n=s.answers.filter(a=>a.trim()).length;
+    return`<li><button type="button" data-id="${s.id}" aria-current="${s.id===state.current}"><span class="s-title"></span><span class="s-meta">${fmtDate(s.date)} · ${n}/${QUESTIONS.length}</span></button></li>`}).join("");
+  $("list").querySelectorAll("button").forEach(b=>{const s=state.sessions.find(x=>x.id===b.dataset.id);b.querySelector(".s-title").textContent=titleOf(s);
+    b.onclick=()=>{state.current=s.id;save();render()}});
+}
+function progress(){const s=cur();const n=s.answers.filter(a=>a.trim()).length;
+  $("progText").textContent=`${n} von ${QUESTIONS.length} Fragen besprochen`;$("progBar").style.width=(n/QUESTIONS.length*100)+"%";
+  s.answers.forEach((a,i)=>$("q"+i).classList.toggle("done",!!a.trim()));
+  $("heading").textContent=titleOf(s)}
+function render(){const s=cur();FIELDS.forEach(f=>$("f-"+f).value=s[f]||"");s.answers.forEach((a,i)=>$("a"+i).value=a);
+  $("exportBox").hidden=true;resetDel();progress();renderList()}
+
+FIELDS.forEach(f=>$("f-"+f).addEventListener("input",e=>{cur()[f]=e.target.value;save();progress();renderList()}));
+$("newBtn").onclick=()=>{const s=blank();state.sessions.push(s);state.current=s.id;save();render();$("f-sura").focus()};
+
+function resetDel(){$("delWrap").innerHTML='<button class="btn ghost danger" id="delBtn" type="button">Sitzung löschen</button>';$("delBtn").onclick=askDel}
+function askDel(){$("delWrap").innerHTML='<span class="confirm">Wirklich löschen? <button class="btn danger" id="yes" type="button">Löschen</button><button class="btn ghost" id="no" type="button">Abbrechen</button></span>';
+  $("no").onclick=resetDel;
+  $("yes").onclick=()=>{state.sessions=state.sessions.filter(s=>s.id!==state.current);if(!state.sessions.length)state.sessions=[blank()];
+    state.current=state.sessions[0].id;save();render();flash("Sitzung gelöscht")}}
+resetDel();
+
+function asText(){const s=cur();let t=`${titleOf(s)}${s.ep?" – "+s.ep:""}\n${fmtDate(s.date)}${s.who?" · "+s.who:""}\n\n`;
+  QUESTIONS.forEach((q,i)=>{t+=`${i+1}. ${q.k}: ${q.q}\n${s.answers[i].trim()||"–"}\n\n`});
+  if(s.free.trim())t+=`Freie Notizen:\n${s.free.trim()}\n`;return t}
+let tt;function flash(m){$("toast").textContent=m;clearTimeout(tt);tt=setTimeout(()=>$("toast").textContent="",2500)}
+$("copyBtn").onclick=()=>{const t=asText();
+  const fallback=()=>{const b=$("exportBox");b.value=t;b.hidden=false;b.focus();b.select();flash("Text markiert, jetzt kopieren")};
+  try{navigator.clipboard.writeText(t).then(()=>flash("In die Zwischenablage kopiert"),fallback)}catch(e){fallback()}};
+
+buildQuestions();load();render();
+</script>
+
+</body></html>
