@@ -1,10 +1,15 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html>
+<head>
+<meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
+
 <title>Tafsir-Gesprächsbogen</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel=""icon" href="icon.svg" type="image/svg+xml">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Instrument+Sans:wght@400;500;600&family=Amiri:wght@400&display=swap">
+
 <style>
+  :root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}
 /* Layout: ruhige Lesespalte wie ein Studienheft; links ein schmales Archiv der Sitzungen, rechts der Bogen */
 :root{
   --bg:#f3f2ee; --paper:#fbfaf7; --ink:#1d2a2b; --muted:#5d6b6a; --line:#d9ddd8;
@@ -91,6 +96,8 @@ textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(
 @media (prefers-reduced-motion:reduce){.bar i{transition:none}}
 </style>
 
+</head>
+<body>
 <div class="wrap">
   <aside>
     <span class="label">Sitzungen</span>
@@ -208,4 +215,5 @@ $("copyBtn").onclick=()=>{const t=asText();
 buildQuestions();load();render();
 </script>
 
-</body></html>
+</body>
+</html>
